@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 // import { directive } from '@babel/types';
 // import React, { Component } from 'react';
 
@@ -6,7 +7,7 @@ const App = () => {
   const profiles = [
     { name: 'Taro', age: 10 },
     { name: 'Hana', age: 15 },
-    { name: 'Yuki'},
+    { name: 'Yuki', age: 20 },
   ]
   return (
     <React.Fragment>
@@ -27,8 +28,12 @@ const User = (props) => {
   );
 }
 
-User.defaultProps = {
-  age: 1
+// User.defaultProps = {
+//   age: 1
+// }
+User.propTypes = {
+  name: PropTypes.string,
+  age : PropTypes.number.isRequired
 }
 
 export default App;
