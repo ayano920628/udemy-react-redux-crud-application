@@ -3,10 +3,11 @@
 // import { directive } from '@babel/types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { increment, decrement } from '../actions';
+import { readEvents } from '../actions';
 // const App = () => (<Counter></Counter>)
+import _ from 'lodash'
 
-class App  extends Component {
+class EventsIndex  extends Component {
   // constructor(props){
   //   super(props);
     // this.state = {count: 0}
@@ -17,15 +18,36 @@ class App  extends Component {
   // handleMinusButton = () => {
   //   this.setState({ count: this.state.count - 1 })
   // }
+  componentDidMount(){
+    this.props.readEvents();
+  }
 
+  renderEvents(){
+    return _.map(this.props.events, event =>(
+      <tr>
+        <td>{event.id}</td>
+        <td>{event.title}</td>
+        <td>{event.body}</td>
+      </tr>
+    ))
+  }
   render() {
-    const props = this.props
+    // const props = this.props
     return (
-      <React.Fragment>
-        <div>value: { props.value }</div>
-        <button onClick={props.increment}>+1</button>
-        <button onClick={props.decrement}>-1</button>
-      </React.Fragment>
+      // <React.Fragment>
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Title</th>
+              <th>Body</th>
+            </tr>
+          </thead>
+          <tbody>
+            {this.renderEvents()}
+          </tbody>
+        </table>
+      // </React.Fragment>
     );
   }
 }
@@ -62,13 +84,13 @@ class App  extends Component {
 //   age : PropTypes.number.isRequired
 // }
 
-const mapStateToProps = state => ({ value: state.count.value })
+const mapStateToProps = state => ({ events: state.events })
 // const mapDispatchToProps = dispatch => ({
 //   increment: () => dispatch(increment()),
 //   decrement: () => dispatch(decrement())
 // })
-const mapDispatchToProps = ({ increment, decrement})
+const mapDispatchToProps = ({ readEvents })
 
-export default connect(mapStateToProps, mapDispatchToProps)(App)
+export default connect(mapStateToProps, mapDispatchToProps)(EventsIndex)
 
 // export default App;
