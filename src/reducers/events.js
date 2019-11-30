@@ -1,5 +1,8 @@
 import _ from 'lodash'
-import { READ_EVENTS } from '../actions'
+import {
+  READ_EVENTS,
+  DELETE_EVENT
+} from '../actions'
 
 // const initialState = { value: 0 }
 
@@ -11,6 +14,9 @@ export default(events = {}, action) => {
       return _.mapKeys(action.response.data, 'id')
     // case DECREMENT:
     //   return { value: state.value - 1 }
+    case DELETE_EVENT:
+      delete events[action.id]
+      return { ...events }
     default:
       return events
   }
